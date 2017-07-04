@@ -1,181 +1,115 @@
-<!DOCTYPE HTML>
-<?php session_start(); ?>
+<?php
+/* Main page with two forms: sign up and log in */
+include_once 'database.php';
+new mydatabase;
+session_start();
+?>
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>The Unknown Forum</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<link rel="shortcut icon" href="img/logo0.png"/>
-	</head>
-	<?php
+<head>
+  <title>Sign-Up/Login Form</title>
+  <?php include 'css/css.html'; ?>
+  <link rel="shortcut icon" href="img/logo.png" type="image/x-icon"/>
+</head>
 
-	function url($param,$php = true){
-		$baseurl = "/php/";
-		if($php){
-			$baseurl .= "forumphp/";
-		}
-		return "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}{$baseurl}{$param}";
-	}
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    if (isset($_POST['login'])) { //logging in
+      require 'login.php';
 
-	?>
-	<body>
+    }
 
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
+    elseif (isset($_POST['register'])) { //user registering
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<h1><a href="index.html">The Unknown Forum</a></h1>
-						<nav>
-							<a href="#menu">Menu</a>
-						</nav>
-					</header>
+        require 'register.php';
+      }
+}
+?>
 
-				<!-- Menu -->
-					<nav id="menu">
-						<div class="inner">
-							<h2>Menu</h2>
-							<ul class="links">
-								<li><a href="index.php">Home</a></li>
-								<li><a href="elements.php">Topics</a></li>
-								<li><a href="profile.php">My Profile</a></li>
-								<?php if(!isset($_SESSION["logged_in"])){ ?>
-									<li><a href= <?=url("new",false)?>>Log In/Sign Up</a></li>
-									<?php }else {?>
-										<li><a href="../new/logout.php">Log out</a></li>
+  <div class="form">
 
-								<?php }?>
-							</ul>
-							<a href="#" class="close">Close</a>
-						</div>
-					</nav>
+      <ul class="tab-group">
+        <li class="tab"><a href="#signup">Sign Up</a></li>
+        <li class="tab active"><a href="#login">Log In</a></li>
+      </ul>
 
-				<!-- Banner -->
-					<section id="banner">
-						<div class="inner">
-							<div class="logo"> <img src="img/logo0.png"/> </div>
-							<h2>This is The Unkown Forum</h2>
-							<p>The Go to forum</p>
-						</div>
-					</section>
+      <div class="tab-content">
 
-				<!-- Wrapper -->
-					<section id="wrapper">
+         <div id="login">
+          <h1>Welcome Back!</h1>
 
-						<!-- One -->
-							<section id="one" class="wrapper spotlight style1">
-								<div class="inner">
-									<a href="generic.php" class="image"><img src="img/PUBGC1.jpg" alt="" /></a>
-									<div class="content">
-										<h2 class="major">PlayerUnknown's Battlegrounds</h2>
-										<p>PLAYERUNKNOWN'S BATTLEGROUNDS is a last-man-standing shooter being developed with community feedback. Players must fight to locate weapons and supplies in a massive 8x8 km island to be the lone survivor. This is BATTLE ROYALE..</p>
-										<a href="generic.php" class="special">Read more</a>
-									</div>
-								</div>
-							</section>
+          <form action="index.php" method="post" autocomplete="off">
 
-						<!-- Two -->
-							<section id="two" class="wrapper alt spotlight style2">
-								<div class="inner">
-									<a href="#" class="image"><img src="img/PUBGC2.jpg" alt="" /></a>
-									<div class="content">
-										<h2 class="major">How to play Battlegrounds</h2>
-										<p>Here a quick guide to get you up and running in Battlegrounds(litterally running).</p>
-										<a href="howto.php" class="special">Learn more</a>
-									</div>
-								</div>
-							</section>
+            <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email" required autocomplete="off" name="email"/>
+          </div>
 
-						<!-- Three -->
-							<section id="three" class="wrapper spotlight style3">
-								<div class="inner">
-									<a href="#" class="image"><img src="img/Weapons_PUBG1.jpg" alt="" /></a>
-									<div class="content">
-										<h2 class="major">Weapons and Attachments</h2>
-										<p>Who doesnt want to see the sexy ass weapons they use in the game?!</p>
-										<a href="generic.php" class="special">Learn more</a>
-									</div>
-								</div>
-							</section>
+          <div class="field-wrap">
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input type="password" required autocomplete="off" name="password"/>
+          </div>
 
+          <p class="forgot"><a href="forgot.php">Forgot Password?</a></p>
 
-						<!-- Four -->
-							<section id="four" class="wrapper alt style1">
-								<div class="inner">
-									<h2 class="major">Vitae phasellus</h2>
-									<p>Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus non pulvinar erat. Fusce tincidunt, nisl eget mattis egestas, purus ipsum consequat orci, sit amet lobortis lorem lacus in tellus. Sed ac elementum arcu. Quisque placerat auctor laoreet.</p>
-									<section class="features">
-										<article>
-											<a href="#" class="image"><img src="img/pic04.jpg" alt="" /></a>
-											<h3 class="major">Sed feugiat lorem</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
-											<a href="#" class="special">Learn more</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="img/pic05.jpg" alt="" /></a>
-											<h3 class="major">Nisl placerat</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
-											<a href="#" class="special">Learn more</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="img/pic06.jpg" alt="" /></a>
-											<h3 class="major">Ante fermentum</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
-											<a href="#" class="special">Learn more</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="img/pic07.jpg" alt="" /></a>
-											<h3 class="major">Fusce consequat</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
-											<a href="#" class="special">Learn more</a>
-										</article>
-									</section>
-									<ul class="actions">
-										<li><a href="#" class="button">Browse All</a></li>
-									</ul>
-								</div>
-							</section>
+          <button class="button button-block" name="login" />Log In</button>
 
-					</section>
+          </form>
 
-				<!-- Footer -->
-					<section id="footer">
-						<div class="inner">
-							<h2 class="major">Get in touch</h2>
-							<p>Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus non pulvinar erat. Fusce tincidunt, nisl eget mattis egestas, purus ipsum consequat orci, sit amet lobortis lorem lacus in tellus. Sed ac elementum arcu. Quisque placerat auctor laoreet.</p>
-							<form method="post" action="#">
-								<div class="field">
-									<label for="name">Name</label>
-									<input type="text" name="name" id="name" />
-								</div>
-								<div class="field">
-									<label for="email">Email</label>
-									<input type="email" name="email" id="email" />
-								</div>
-								<div class="field">
-									<label for="message">Message</label>
-									<textarea name="message" id="message" rows="4"></textarea>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-						</div>
-					</section>
+        </div>
 
-			</div>
+        <div id="signup">
+          <h1>Sign Up for Free</h1>
 
-		<!-- Scripts -->
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+          <form action="index.php" method="post" autocomplete="off">
 
-	</body>
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                First Name<span class="req">*</span>
+              </label>
+              <input type="text" required autocomplete="off" name='firstname' />
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Last Name<span class="req">*</span>
+              </label>
+              <input type="text"required autocomplete="off" name='lastname' />
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off" name='email' />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Set A Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off" name='password'/>
+          </div>
+
+          <button type="submit" class="button button-block" name="register" />Register</button>
+
+          </form>
+
+        </div>
+
+      </div><!-- tab-content -->
+
+</div> <!-- /form -->
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <script src="js/index.js"></script>
+
+</body>
 </html>
